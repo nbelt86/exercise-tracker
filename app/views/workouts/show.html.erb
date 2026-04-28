@@ -1,0 +1,10 @@
+<h2><%= @workout.name %></h2>
+<p><%= @workout.name %></p>
+
+<% @workout.exercise_entries do |entry| %>
+  <p><%= entry.set_entries. each do |set| %></p>\
+    <p><%= set.reps %></p>
+  <% end  %>
+
+<% end %>
+2
