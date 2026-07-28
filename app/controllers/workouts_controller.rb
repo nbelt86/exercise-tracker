@@ -5,10 +5,13 @@ class WorkoutsController < ApplicationController
 
   def show
     @workout = Workout.find(params[:id])
+    @exercise_entry = ExerciseEntry.new(workout: @workout)
+    @exercises = Exercise.all
   end
 
   def new
     @workout = Workout.new
+
   end
 
   def create

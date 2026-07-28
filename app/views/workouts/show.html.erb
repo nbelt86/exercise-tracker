@@ -1,10 +1,30 @@
 <h2><%= @workout.name %></h2>
-<p><%= @workout.name %></p>
+<p><%= @workout.date %></p>
 
-<% @workout.exercise_entries do |entry| %>
-  <p><%= entry.set_entries. each do |set| %></p>\
-    <p><%= set.reps %></p>
-  <% end  %>
+<% @workout.exercise_entries.each do |entry| %>
+  <div>
+    <strong><%= entry.exercise.name %></strong>
+    <%= button_to "Remove Exercise", workout_exercise_entry_path(@workout, entry), method: :delete %>
 
+    <% entry.set_entries.each do |set| %>
+      <p>
+        Set <%= set.set_number %>: <%= set.reps %> reps @ <%= set.weight %> lbs
+        <%= button_to "Remove Set", workout_exercise_entry_set_entry_path(@workout, entry, set), method: :delete %>
+      </p>
+    <% end %>
+
+    <%= form_with model: [@workout, entry, entry.set_entries.new] do |f| %>
+      <%= f.number_field :reps, placeholder: "Reps" %>
+      <%= f.number_field :weight, placeholder: "Weight (lbs)" %>
+      <%= f.submit "Add Set" %>
+    <% end %>
+  </div>
 <% end %>
-2
+
+<h3>Add Exercise</h3>
+<%= form_with model: [@workout, @exercise_entry] do |f| %>
+  <%= f.collection_select :exercise_id, @exercises, :id, :name, { prompt: "Select an exercise" } %>
+  <%= f.submit "Add to Workout" %>
+<% end %>
+
+<%= link_to "Back to workouts", workouts_path %>

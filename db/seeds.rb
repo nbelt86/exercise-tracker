@@ -1,9 +1,16 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+[
+  { name: "Bench Press",    muscles_target: "Chest, Triceps, Shoulders" },
+  { name: "Squat",          muscles_target: "Quads, Glutes, Hamstrings" },
+  { name: "Deadlift",       muscles_target: "Hamstrings, Glutes, Back" },
+  { name: "Overhead Press", muscles_target: "Shoulders, Triceps" },
+  { name: "Barbell Row",    muscles_target: "Back, Biceps" },
+  { name: "Pull-up",        muscles_target: "Back, Biceps" },
+  { name: "Dip",            muscles_target: "Chest, Triceps" },
+  { name: "Lunge",          muscles_target: "Quads, Glutes" },
+  { name: "Bicep Curl",     muscles_target: "Biceps" },
+  { name: "Tricep Pushdown", muscles_target: "Triceps" }
+].each do |attrs|
+  Exercise.find_or_create_by!(name: attrs[:name]) do |e|
+    e.muscles_target = attrs[:muscles_target]
+  end
+end
