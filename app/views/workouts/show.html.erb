@@ -1,4 +1,6 @@
-<h2><%= @workout.name %></h2>
+<div class="flex flex-col gap-4 bg-blue-50">
+
+<h2 class="text-2xl font-bold text-gray-900"><%= @workout.name %></h2>
 <p><%= @workout.date %></p>
 
 <% @workout.exercise_entries.each do |entry| %>
@@ -28,3 +30,4 @@
 <% end %>
 
 <%= link_to "Back to workouts", workouts_path %>
+</div>
