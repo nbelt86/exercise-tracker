@@ -1,18 +1,20 @@
-<h1>New Workout</h1>
+<div class="flex flex-col gap-4 mb-4">
+  <h1 class="text-2xl font-bold text-gray-900">New Workout</h1>
 
-<%= form_with model: @workout do |f| %>
-<div>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+  <%= form_with model: @workout do |f| %>
+  <div class="flex flex-col gap-4 mb-4">
+    <%= f.label :name, class:"font-bold text-gray-900" %>
+    <%= f.text_field :name, class:"border border-gray-300 rounded-md px-3 py-2 w-full" %>
+  </div>
+
+  <div class="flex flex-col gap-4 mb-4">
+    <%= f.label :date, class:"font-bold text-gray-900"%>
+    <%= f.date_field :date, class:"border border-gray-300 rounded-md px-3 py-2 w-full" %>
+  </div>
+
+  <div class="flex flex-col gap-4 mb-4">
+    <%= f.submit "Create Workout", class:"bg-red-600 hover:bg-red-700 text-white rounded-md my-3 px-3 py-2" %>
+  </div>
+
+  <% end %>
 </div>
-
-<div>
-  <%= f.label :date %>
-  <%= f.date_field :date%>
-</div>
-
-<div>
-  <%= f.submit "Create Workout" %>
-</div>
-
-<% end %>

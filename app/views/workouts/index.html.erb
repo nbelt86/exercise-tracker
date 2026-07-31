@@ -1,11 +1,11 @@
 <div class="flex flex-col gap-4">
 <h1 class="text-2xl font-bold text-gray-900">Workouts</h1>
 
-<%= link_to "New Workout", new_workout_path, class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 font-medium"%>
+<%= link_to "New Workout", new_workout_path, class: "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 font-medium"%>
 
 <ul class="flex flex-col gap-3">
   <% @workouts.each do |workout| %>
-  <li class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition "><%= link_to workout.name, workout_path(workout) %>
+  <li class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md hover:bg-white transition"><%= link_to workout.name, workout_path(workout), class: "font-medium hover:text-red-600 transition" %>
   </li>
   <% end %>
 </ul>
