@@ -1,10 +1,10 @@
-<div class="flex flex-col gap-4 bg-blue-50">
+<div class="flex flex-col gap-4">
 
 <h2 class="text-2xl font-bold text-gray-900"><%= @workout.name %></h2>
 <p><%= @workout.date %></p>
 
 <% @workout.exercise_entries.each do |entry| %>
-  <div>
+  <div data-controller="toggle">
     <strong><%= entry.exercise.name %></strong>
     <%= button_to "Remove Exercise", workout_exercise_entry_path(@workout, entry), method: :delete %>
 
@@ -15,7 +15,9 @@
       </p>
     <% end %>
 
-    <%= form_with model: [@workout, entry, entry.set_entries.new] do |f| %>
+<button type="button" data-action="click->toggle#toggleVisibility">+ Add Set</button>
+    <%= form_with model: [@workout, entry, entry.set_entries.new], data:{ toggle_target: "content" }, class: "hidden" do |f| %>
+
       <%= f.number_field :reps, placeholder: "Reps" %>
       <%= f.number_field :weight, placeholder: "Weight (lbs)" %>
       <%= f.submit "Add Set" %>
