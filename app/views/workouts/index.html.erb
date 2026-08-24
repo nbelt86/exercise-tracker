@@ -1,12 +1,24 @@
-<div class="flex flex-col gap-4">
-<h1 class="text-2xl font-bold text-gray-900">Workouts</h1>
+<div class="flex flex-col gap-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-gray-900">Workouts</h1>
+    <%= link_to "+ New Workout", new_workout_path, class: "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 font-medium transition" %>
+  </div>
 
-<%= link_to "New Workout", new_workout_path, class: "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 font-medium"%>
-
-<ul class="flex flex-col gap-3">
-  <% @workouts.each do |workout| %>
-  <li class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md hover:bg-white transition"><%= link_to workout.name, workout_path(workout), class: "font-medium hover:text-red-600 transition" %>
-  </li>
+  <% if @workouts.any? %>
+    <ul class="flex flex-col gap-3">
+      <% @workouts.each do |workout| %>
+        <li class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md hover:bg-white transition">
+          <%= link_to workout_path(workout), class: "flex items-center justify-between" do %>
+            <span class="font-medium text-gray-900 hover:text-red-600 transition"><%= workout.name %></span>
+            <span class="text-sm text-gray-500"><%= workout.date&.strftime("%b %-d, %Y") %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="flex flex-col items-center gap-3 text-center bg-gray-50 border border-dashed border-gray-300 rounded-lg py-12 px-4">
+      <p class="text-gray-600">No workouts yet — log your first one to get started.</p>
+      <%= link_to "+ New Workout", new_workout_path, class: "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 font-medium transition" %>
+    </div>
   <% end %>
-</ul>
 </div>

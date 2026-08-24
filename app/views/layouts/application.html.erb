@@ -14,6 +14,11 @@
   <body class="bg-gray-100">
     <nav class="flex justify-between items-center px-6 py-4 bg-white">
       <%= link_to "ExerciseTracker", root_path, class: "text-xl font-bold text-gray-800" %>
+      <div class="flex gap-6">
+        <%= link_to "Workouts", workouts_path, class: "text-gray-600 hover:text-gray-900" %>
+        <%= link_to "Exercises", exercises_path, class: "text-gray-600 hover:text-gray-900" %>
+        <%= link_to "New Workout", new_workout_path, class: "text-gray-600 hover:text-gray-900" %>
+      </div>
     </nav>
     <main class="container mx-auto mt-28 px-5 flex bg-white rounded-xl shadow-sm p-6">
       <%= yield %>

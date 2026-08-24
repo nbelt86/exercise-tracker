@@ -1,0 +1,25 @@
+<div class="flex flex-col gap-6">
+  <h1 class="text-2xl font-bold text-gray-900">Exercises</h1>
+
+  <% if @exercises.any? %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <% @exercises.each do |exercise| %>
+        <%= link_to exercise_path(exercise), class: "block bg-gray-50 border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition group" do %>
+          <% if exercise.image_url.present? %>
+            <img src="<%= exercise.image_url %>" alt="<%= exercise.name %>" class="w-full h-36 object-cover">
+          <% end %>
+          <div class="p-4 flex flex-col gap-2">
+            <span class="font-medium text-gray-900 group-hover:text-red-600 transition"><%= exercise.name %></span>
+            <% if exercise.muscles_target.present? %>
+              <span class="text-xs font-medium text-red-700 bg-red-50 px-2 py-0.5 rounded-full w-fit"><%= exercise.muscles_target %></span>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="flex flex-col items-center gap-3 text-center bg-gray-50 border border-dashed border-gray-300 rounded-lg py-12 px-4">
+      <p class="text-gray-600">No exercises in the catalog yet.</p>
+    </div>
+  <% end %>
+</div>
