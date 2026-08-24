@@ -2,13 +2,13 @@
   <h1 class="text-2xl font-bold text-gray-900">Exercises</h1>
 
   <% if @exercises.any? %>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
       <% @exercises.each do |exercise| %>
         <%= link_to exercise_path(exercise), class: "block bg-gray-50 border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition group" do %>
           <% if exercise.image_url.present? %>
-            <img src="<%= exercise.image_url %>" alt="<%= exercise.name %>" class="w-full h-36 object-cover">
+            <img src="<%= exercise.image_url %>" alt="<%= exercise.name %>" class="w-full h-20 object-cover">
           <% end %>
-          <div class="p-4 flex flex-col gap-2">
+          <div class="p-3 flex flex-col gap-1.5">
             <span class="font-medium text-gray-900 group-hover:text-red-600 transition"><%= exercise.name %></span>
             <% if exercise.muscles_target.present? %>
               <span class="text-xs font-medium text-red-700 bg-red-50 px-2 py-0.5 rounded-full w-fit"><%= exercise.muscles_target %></span>
