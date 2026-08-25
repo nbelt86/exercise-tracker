@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-6">
-  <div class="flex items-center justify-between">
+  <div class="flex items-center justify-between gap-6 pb-2">
     <h1 class="text-2xl font-bold text-gray-900">Workouts</h1>
-    <%= link_to "+ New Workout", new_workout_path, class: "bg-red-600 text-white text-sm px-3 py-1.5 rounded-md hover:bg-red-700 font-medium transition" %>
+    <%= link_to "+ New Workout", new_workout_path, class: "bg-red-600 text-white text-sm px-4 py-2 rounded-md hover:bg-red-700 font-medium transition" %>
   </div>
 
   <% if @workouts.any? %>
