@@ -1,15 +1,15 @@
 <div class="flex flex-col gap-6 max-w-md">
-  <h1 class="text-2xl font-bold text-gray-900">New Workout</h1>
+  <h1 class="text-2xl font-bold text-white">New Workout</h1>
 
-  <%= form_with model: @workout, class: "flex flex-col gap-4 bg-gray-50 border border-gray-200 rounded-lg p-6" do |f| %>
+  <%= form_with model: @workout, class: "flex flex-col gap-4 bg-gray-900 border border-gray-700 rounded-lg p-6" do |f| %>
     <div class="flex flex-col gap-1">
-      <%= f.label :name, class: "font-bold text-gray-900 text-sm" %>
-      <%= f.text_field :name, class: "border border-gray-300 rounded-md px-3 py-2 w-full" %>
+      <%= f.label :name, class: "font-bold text-white text-sm" %>
+      <%= f.text_field :name, class: "bg-gray-800 border border-gray-600 text-white rounded-md px-3 py-2 w-full" %>
     </div>
 
     <div class="flex flex-col gap-1">
-      <%= f.label :date, class: "font-bold text-gray-900 text-sm" %>
-      <%= f.date_field :date, class: "border border-gray-300 rounded-md px-3 py-2 w-full" %>
+      <%= f.label :date, class: "font-bold text-white text-sm" %>
+      <%= f.date_field :date, class: "bg-gray-800 border border-gray-600 text-white rounded-md px-3 py-2 w-full" %>
     </div>
 
     <%= f.submit "Create Workout", class: "bg-red-600 hover:bg-red-700 text-white rounded-md px-3 py-2 font-medium transition" %>

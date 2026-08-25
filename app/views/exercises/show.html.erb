@@ -1,22 +1,22 @@
 <div class="flex flex-col gap-4 max-w-lg">
-  <%= link_to "← Back to Exercises", exercises_path, class: "text-gray-500 hover:text-gray-700 text-sm w-fit" %>
+  <%= link_to "← Back to Exercises", exercises_path, class: "text-gray-400 hover:text-gray-200 text-sm w-fit transition" %>
 
-  <div class="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden">
+  <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden">
     <% if @exercise.image_url.present? %>
       <img src="<%= @exercise.image_url %>" alt="<%= @exercise.name %>" class="w-full h-40 object-cover">
     <% end %>
 
     <div class="p-6 flex flex-col gap-3">
-      <h1 class="text-2xl font-bold text-gray-900"><%= @exercise.name %></h1>
+      <h1 class="text-2xl font-bold text-white"><%= @exercise.name %></h1>
 
       <% if @exercise.muscles_target.present? %>
-        <span class="inline-block w-fit bg-red-50 text-red-700 text-sm font-medium px-3 py-1 rounded-full">
+        <span class="inline-block w-fit bg-red-950 text-red-400 text-sm font-medium px-3 py-1 rounded-full">
           <%= @exercise.muscles_target %>
         </span>
       <% end %>
 
       <% if @exercise.description.present? %>
-        <p class="text-gray-700 leading-relaxed border-t border-gray-200 pt-3"><%= @exercise.description %></p>
+        <p class="text-gray-300 leading-relaxed border-t border-gray-700 pt-3"><%= @exercise.description %></p>
       <% end %>
     </div>
   </div>

@@ -1,25 +1,25 @@
 <div class="flex flex-col gap-6">
-  <h1 class="text-2xl font-bold text-gray-900">Exercises</h1>
+  <h1 class="text-2xl font-bold text-white">Exercises</h1>
 
   <% if @exercises.any? %>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
       <% @exercises.each do |exercise| %>
-        <%= link_to exercise_path(exercise), class: "block bg-gray-50 border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition group" do %>
+        <%= link_to exercise_path(exercise), class: "block bg-gray-900 border border-gray-700 rounded-lg overflow-hidden hover:border-gray-600 hover:bg-gray-700 transition group" do %>
           <% if exercise.image_url.present? %>
             <img src="<%= exercise.image_url %>" alt="<%= exercise.name %>" class="w-full h-20 object-cover">
           <% end %>
           <div class="p-3 flex flex-col gap-1.5">
-            <span class="font-medium text-gray-900 group-hover:text-red-600 transition"><%= exercise.name %></span>
+            <span class="font-medium text-gray-100 group-hover:text-red-500 transition"><%= exercise.name %></span>
             <% if exercise.muscles_target.present? %>
-              <span class="text-xs font-medium text-red-700 bg-red-50 px-2 py-0.5 rounded-full w-fit"><%= exercise.muscles_target %></span>
+              <span class="text-xs font-medium text-red-400 bg-red-950 px-2 py-0.5 rounded-full w-fit"><%= exercise.muscles_target %></span>
             <% end %>
           </div>
         <% end %>
       <% end %>
     </div>
   <% else %>
-    <div class="flex flex-col items-center gap-3 text-center bg-gray-50 border border-dashed border-gray-300 rounded-lg py-12 px-4">
-      <p class="text-gray-600">No exercises in the catalog yet.</p>
+    <div class="flex flex-col items-center gap-3 text-center bg-gray-900 border border-dashed border-gray-700 rounded-lg py-12 px-4">
+      <p class="text-gray-400">No exercises in the catalog yet.</p>
     </div>
   <% end %>
 </div>

@@ -1,63 +1,63 @@
 <div class="flex flex-col gap-6">
 
-  <%= link_to "← Back to workouts", workouts_path, class: "text-gray-500 hover:text-gray-700 text-sm w-fit" %>
+  <%= link_to "← Back to workouts", workouts_path, class: "text-gray-400 hover:text-gray-200 text-sm w-fit transition" %>
 
-  <div class="flex items-center justify-between border-b border-gray-200 pb-4">
-    <h2 class="text-2xl font-bold text-gray-900"><%= @workout.name %></h2>
+  <div class="flex items-center justify-between border-b border-gray-700 pb-4">
+    <h2 class="text-2xl font-bold text-white"><%= @workout.name %></h2>
     <div class="flex items-center gap-3">
-      <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full"><%= @workout.date&.strftime("%B %-d, %Y") %></span>
+      <span class="text-sm text-gray-400 bg-gray-900 border border-gray-700 px-3 py-1 rounded-full"><%= @workout.date&.strftime("%B %-d, %Y") %></span>
       <%= button_to "Delete Workout", workout_path(@workout), method: :delete,
       data: { turbo_confirm: "Delete this workout? This cannot be undone." },
-      class: "text-gray-400 hover:text-red-600 text-sm transition" %>
+      class: "text-gray-500 hover:text-red-500 text-sm transition" %>
     </div>
   </div>
 
   <% if @workout.exercise_entries.any? %>
     <div class="flex flex-col gap-4">
       <% @workout.exercise_entries.each do |entry| %>
-        <div data-controller="toggle" class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+        <div data-controller="toggle" class="bg-gray-900 border border-gray-700 rounded-lg p-4">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <% if entry.exercise.image_url.present? %>
                 <img src="<%= entry.exercise.image_url %>" alt="<%= entry.exercise.name %>" class="w-12 h-12 object-cover rounded-md">
               <% end %>
               <div class="flex items-center gap-2">
-                <strong class="text-lg font-bold text-gray-900"><%= entry.exercise.name %></strong>
+                <strong class="text-lg font-bold text-white"><%= entry.exercise.name %></strong>
                 <% if entry.exercise.muscles_target.present? %>
-                  <span class="text-xs font-medium text-red-700 bg-red-50 px-2 py-0.5 rounded-full"><%= entry.exercise.muscles_target %></span>
+                  <span class="text-xs font-medium text-red-400 bg-red-950 px-2 py-0.5 rounded-full"><%= entry.exercise.muscles_target %></span>
                 <% end %>
               </div>
             </div>
             <%= button_to "Remove", workout_exercise_entry_path(@workout, entry), method: :delete,
-            class: "text-gray-400 hover:text-red-600 text-sm transition" %>
+            class: "text-gray-500 hover:text-red-500 text-sm transition" %>
           </div>
 
           <% if entry.set_entries.any? %>
-            <ul class="flex flex-col divide-y divide-gray-200 mt-3">
+            <ul class="flex flex-col divide-y divide-gray-700 mt-3">
               <% entry.set_entries.each do |set| %>
                 <li data-controller="toggle" class="py-2">
                   <div class="flex items-center justify-between">
-                    <span class="text-gray-700">
-                      <span class="font-medium text-gray-900">Set <%= set.set_number %></span>
+                    <span class="text-gray-300">
+                      <span class="font-medium text-white">Set <%= set.set_number %></span>
                       — <%= set.reps %> reps @ <%= set.weight %> lbs
                     </span>
                     <div class="flex items-center gap-3">
                       <button type="button" data-action="click->toggle#toggleVisibility"
-                      class="text-gray-400 hover:text-gray-700 text-xs transition">Edit</button>
+                      class="text-gray-500 hover:text-gray-300 text-xs transition">Edit</button>
                       <%= button_to "Remove", workout_exercise_entry_set_entry_path(@workout, entry, set), method: :delete,
-                      class: "text-gray-400 hover:text-red-600 text-xs transition" %>
+                      class: "text-gray-500 hover:text-red-500 text-xs transition" %>
                     </div>
                   </div>
 
                   <%= form_with model: [@workout, entry, set], url: workout_exercise_entry_set_entry_path(@workout, entry, set),
-                  method: :patch, data: { toggle_target: "content" }, class: "hidden flex items-end gap-3 mt-2 bg-white border border-gray-200 rounded-md p-3" do |f| %>
+                  method: :patch, data: { toggle_target: "content" }, class: "hidden flex items-end gap-3 mt-2 bg-gray-800 border border-gray-700 rounded-md p-3" do |f| %>
                     <div class="flex flex-col gap-1">
-                      <%= f.label :reps, class: "text-xs font-medium text-gray-500" %>
-                      <%= f.number_field :reps, class: "border border-gray-300 rounded-md px-3 py-2 w-24" %>
+                      <%= f.label :reps, class: "text-xs font-medium text-gray-400" %>
+                      <%= f.number_field :reps, class: "bg-gray-900 border border-gray-600 text-white rounded-md px-3 py-2 w-24" %>
                     </div>
                     <div class="flex flex-col gap-1">
-                      <%= f.label :weight, "Weight (lbs)", class: "text-xs font-medium text-gray-500" %>
-                      <%= f.number_field :weight, class: "border border-gray-300 rounded-md px-3 py-2 w-24" %>
+                      <%= f.label :weight, "Weight (lbs)", class: "text-xs font-medium text-gray-400" %>
+                      <%= f.number_field :weight, class: "bg-gray-900 border border-gray-600 text-white rounded-md px-3 py-2 w-24" %>
                     </div>
                     <%= f.submit "Save", class: "bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-3 py-2 rounded-md transition" %>
                   <% end %>
@@ -65,20 +65,20 @@
               <% end %>
             </ul>
           <% else %>
-            <p class="text-sm text-gray-400 mt-3">No sets logged yet.</p>
+            <p class="text-sm text-gray-500 mt-3">No sets logged yet.</p>
           <% end %>
 
           <button type="button" data-action="click->toggle#toggleVisibility"
-          class="text-red-600 text-sm font-medium hover:text-red-800 transition mt-3">+ Add Set</button>
+          class="text-red-500 text-sm font-medium hover:text-red-400 transition mt-3">+ Add Set</button>
 
-          <%= form_with model: [@workout, entry, entry.set_entries.new], data: { toggle_target: "content" }, class: "hidden flex items-end gap-3 mt-3 bg-white border border-gray-200 rounded-md p-3" do |f| %>
+          <%= form_with model: [@workout, entry, entry.set_entries.new], data: { toggle_target: "content" }, class: "hidden flex items-end gap-3 mt-3 bg-gray-800 border border-gray-700 rounded-md p-3" do |f| %>
             <div class="flex flex-col gap-1">
-              <%= f.label :reps, class: "text-xs font-medium text-gray-500" %>
-              <%= f.number_field :reps, placeholder: "Reps", class: "border border-gray-300 rounded-md px-3 py-2 w-24" %>
+              <%= f.label :reps, class: "text-xs font-medium text-gray-400" %>
+              <%= f.number_field :reps, placeholder: "Reps", class: "bg-gray-900 border border-gray-600 text-white rounded-md px-3 py-2 w-24" %>
             </div>
             <div class="flex flex-col gap-1">
-              <%= f.label :weight, "Weight (lbs)", class: "text-xs font-medium text-gray-500" %>
-              <%= f.number_field :weight, placeholder: "Weight", class: "border border-gray-300 rounded-md px-3 py-2 w-24" %>
+              <%= f.label :weight, "Weight (lbs)", class: "text-xs font-medium text-gray-400" %>
+              <%= f.number_field :weight, placeholder: "Weight", class: "bg-gray-900 border border-gray-600 text-white rounded-md px-3 py-2 w-24" %>
             </div>
             <%= f.submit "Add Set", class: "bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-3 py-2 rounded-md transition" %>
           <% end %>
@@ -89,11 +89,11 @@
     <p class="text-gray-500 text-sm">No exercises added yet — add one below to get started.</p>
   <% end %>
 
-  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-    <h3 class="text-gray-900 font-bold mb-3">Add Exercise</h3>
+  <div class="bg-gray-900 border border-gray-700 rounded-lg p-4">
+    <h3 class="text-white font-bold mb-3">Add Exercise</h3>
     <%= form_with model: [@workout, @exercise_entry], class: "flex items-center gap-3" do |f| %>
       <%= f.collection_select :exercise_id, @exercises, :id, :name, { prompt: "Select an exercise" },
-      class: "border border-gray-300 rounded-md px-3 py-2 flex-1" %>
+      class: "bg-gray-800 border border-gray-600 text-white rounded-md px-3 py-2 flex-1" %>
       <%= f.submit "Add to Workout", class: "bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-medium transition" %>
     <% end %>
   </div>
