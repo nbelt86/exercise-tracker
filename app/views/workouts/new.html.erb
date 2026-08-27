@@ -17,7 +17,7 @@
 
     <div class="flex flex-col gap-1">
       <%= f.label :date, class: "font-bold text-white text-sm" %>
-      <%= f.date_field :date, class: "bg-gray-800 border border-gray-600 text-white rounded-md px-3 py-2 w-full" %>
+      <%= f.date_field :date, max: Date.today, class: "bg-gray-800 border border-gray-600 text-white rounded-md px-3 py-2 w-full" %>
     </div>
 
     <%= f.submit "Create Workout", class: "bg-red-600 hover:bg-red-700 text-white rounded-md px-3 py-2 font-medium transition" %>
