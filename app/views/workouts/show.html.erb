@@ -32,6 +32,15 @@
             class: "text-gray-500 hover:text-red-500 text-sm transition" %>
           </div>
 
+          <% if (previous = entry.previous_entry) && previous.set_entries.any? %>
+            <div class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
+              <span class="font-medium text-gray-400">Last time (<%= previous.workout.date&.strftime("%b %-d") %>):</span>
+              <% previous.set_entries.each do |set| %>
+                <span class="bg-gray-800 border border-gray-700 rounded-full px-2 py-0.5"><%= set.reps %> × <%= set.weight %> lbs</span>
+              <% end %>
+            </div>
+          <% end %>
+
           <% if entry.set_entries.any? %>
             <ul class="flex flex-col divide-y divide-gray-700 mt-3">
               <% entry.set_entries.each do |set| %>
