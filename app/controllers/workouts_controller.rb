@@ -10,8 +10,7 @@ class WorkoutsController < ApplicationController
   end
 
   def new
-    @workout = Workout.new
-
+    @workout = Workout.new(date: Date.today)
   end
 
   def create
