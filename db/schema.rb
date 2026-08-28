@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_08_24_072352) do
+ActiveRecord::Schema[7.1].define(version: 2026_08_28_024543) do
   create_table "exercise_entries", force: :cascade do |t|
     t.integer "exercise_id", null: false
     t.integer "workout_id", null: false
@@ -39,14 +39,29 @@ ActiveRecord::Schema[7.1].define(version: 2026_08_24_072352) do
     t.index ["exercise_entry_id"], name: "index_set_entries_on_exercise_entry_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
   create_table "workouts", force: :cascade do |t|
     t.string "name"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_workouts_on_user_id"
   end
 
   add_foreign_key "exercise_entries", "exercises"
   add_foreign_key "exercise_entries", "workouts"
   add_foreign_key "set_entries", "exercise_entries"
+  add_foreign_key "workouts", "users"
 end

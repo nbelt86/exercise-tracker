@@ -1,10 +1,10 @@
 class WorkoutsController < ApplicationController
   def index
-    @workouts = Workout.all
+    @workouts = current_user.workouts
   end
 
   def show
-    @workout = Workout.find(params[:id])
+    @workout = current_user.workouts.find(params[:id])
     @exercise_entry = ExerciseEntry.new(workout: @workout)
     @exercises = Exercise.all
   end
@@ -14,7 +14,7 @@ class WorkoutsController < ApplicationController
   end
 
   def create
-    @workout = Workout.new(workout_params)
+    @workout = current_user.workouts.new(workout_params)
 
     if @workout.save
       redirect_to @workout
@@ -24,7 +24,7 @@ class WorkoutsController < ApplicationController
   end
 
   def destroy
-    @workout = Workout.find(params[:id])
+    @workout = current_user.workouts.find(params[:id])
     @workout.destroy
     redirect_to workouts_path
   end
