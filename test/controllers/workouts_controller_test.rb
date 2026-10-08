@@ -101,4 +101,37 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :not_found
   end
+
+  test "duplicate copies the workout's name, today's date, and its exercises" do
+    sign_in @user
+    entry = exercise_entries(:one)
+
+    assert_difference("Workout.count", 1) do
+      post duplicate_workout_path(@workout)
+    end
+
+    new_workout = Workout.last
+    assert_redirected_to workout_path(new_workout)
+    assert_equal @workout.name, new_workout.name
+    assert_equal Date.today, new_workout.date
+    assert_equal [entry.exercise_id], new_workout.exercise_entries.pluck(:exercise_id)
+  end
+
+  test "duplicate does not copy set entries" do
+    sign_in @user
+    set_entries(:one)
+
+    post duplicate_workout_path(@workout)
+
+    new_workout = Workout.last
+    assert new_workout.exercise_entries.first.set_entries.empty?
+  end
+
+  test "duplicate cannot be performed on another user's workout" do
+    sign_in @user
+    assert_no_difference("Workout.count") do
+      post duplicate_workout_path(@other_workout)
+    end
+    assert_response :not_found
+  end
 end

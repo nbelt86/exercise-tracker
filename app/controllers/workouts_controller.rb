@@ -43,6 +43,20 @@ class WorkoutsController < ApplicationController
     redirect_to workouts_path
   end
 
+  def duplicate
+    @workout = current_user.workouts.find(params[:id])
+    new_workout = current_user.workouts.new(name: @workout.name, date: Date.today)
+
+    if new_workout.save
+      @workout.exercise_entries.each do |entry|
+        new_workout.exercise_entries.create(exercise: entry.exercise)
+      end
+      redirect_to new_workout
+    else
+      redirect_to @workout, alert: "Could not duplicate workout."
+    end
+  end
+
 private
 
   def workout_params
