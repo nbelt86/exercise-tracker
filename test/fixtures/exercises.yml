@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  muscles_target: MyString
+  name: Bench Press
+  muscles_target: Chest, Triceps, Shoulders
   description: MyText
 
 two:
-  name: MyString
-  muscles_target: MyString
+  name: Squat
+  muscles_target: Quads, Glutes, Hamstrings
   description: MyText

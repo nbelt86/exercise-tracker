@@ -1,6 +1,15 @@
 <div class="flex flex-col gap-6">
   <h1 class="text-2xl font-bold text-white">Exercises</h1>
 
+  <%= form_with url: exercises_path, method: :get, class: "flex gap-3" do |f| %>
+    <%= f.text_field :query, value: @query, placeholder: "Search by name or muscle group...",
+    class: "bg-gray-900 border border-gray-700 text-white rounded-md px-3 py-2 flex-1" %>
+    <%= f.submit "Search", class: "bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-medium transition" %>
+    <% if @query.present? %>
+      <%= link_to "Clear", exercises_path, class: "text-gray-400 hover:text-white text-sm self-center transition" %>
+    <% end %>
+  <% end %>
+
   <% if @exercises.any? %>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
       <% @exercises.each do |exercise| %>
@@ -19,7 +28,13 @@
     </div>
   <% else %>
     <div class="flex flex-col items-center gap-3 text-center bg-gray-900 border border-dashed border-gray-700 rounded-lg py-12 px-4">
-      <p class="text-gray-400">No exercises in the catalog yet.</p>
+      <p class="text-gray-400">
+        <% if @query.present? %>
+          No exercises match "<%= @query %>".
+        <% else %>
+          No exercises in the catalog yet.
+        <% end %>
+      </p>
     </div>
   <% end %>
 </div>
