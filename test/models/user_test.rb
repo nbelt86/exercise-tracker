@@ -30,4 +30,23 @@ class UserTest < ActiveSupport::TestCase
       user.destroy
     end
   end
+
+  test "regular users are not guests by default" do
+    assert_not users(:one).guest?
+  end
+
+  test "create_guest! creates a persisted, flagged guest user" do
+    guest = nil
+    assert_difference("User.count", 1) do
+      guest = User.create_guest!
+    end
+    assert guest.persisted?
+    assert guest.guest?
+  end
+
+  test "create_guest! seeds the guest with a sample workout" do
+    guest = User.create_guest!
+    assert guest.workouts.exists?
+    assert guest.workouts.first.exercise_entries.exists?
+  end
 end

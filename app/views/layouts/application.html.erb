@@ -20,7 +20,11 @@
           <%= link_to "Exercises", exercises_path, class: "text-gray-400 hover:text-white transition" %>
           <%= link_to "New Workout", new_workout_path, class: "text-gray-400 hover:text-white transition" %>
           <span class="text-gray-600">|</span>
-          <span class="text-gray-500 text-sm"><%= current_user.email %></span>
+          <% if current_user.guest? %>
+            <span class="text-xs font-medium text-orange-400 bg-orange-950 px-2 py-0.5 rounded-full">Guest session</span>
+          <% else %>
+            <span class="text-gray-500 text-sm"><%= current_user.email %></span>
+          <% end %>
           <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "text-gray-400 hover:text-white transition bg-transparent border-none p-0 cursor-pointer" %>
         <% else %>
           <%= link_to "Sign in", new_user_session_path, class: "text-gray-400 hover:text-white transition" %>
