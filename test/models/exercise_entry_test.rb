@@ -53,6 +53,20 @@ class ExerciseEntryTest < ActiveSupport::TestCase
     assert_nil newer_entry.previous_entry
   end
 
+  test "previous_entry ignores entries belonging to a different user" do
+    user = users(:one)
+    other_user = users(:two)
+    exercise = Exercise.create!(name: "Shared Exercise")
+
+    other_users_workout = other_user.workouts.create!(name: "Other user's", date: 5.days.ago.to_date)
+    other_users_workout.exercise_entries.create!(exercise: exercise)
+
+    my_workout = user.workouts.create!(name: "Mine", date: Date.today)
+    my_entry = my_workout.exercise_entries.create!(exercise: exercise)
+
+    assert_nil my_entry.previous_entry
+  end
+
   test "previous_entry is nil when the workout has no date" do
     user = users(:one)
     exercise = Exercise.create!(name: "Undated Workout Exercise")

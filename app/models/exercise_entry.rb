@@ -8,6 +8,7 @@ class ExerciseEntry < ApplicationRecord
 
     ExerciseEntry.joins(:workout)
                  .where(exercise_id: exercise_id)
+                 .where(workouts: { user_id: workout.user_id })
                  .where.not(id: id)
                  .where.not(workouts: { date: nil })
                  .where("workouts.date < :date OR (workouts.date = :date AND workouts.id < :workout_id)",
