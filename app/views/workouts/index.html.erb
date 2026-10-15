@@ -4,6 +4,21 @@
     <%= link_to "+ New Workout", new_workout_path, class: "bg-red-600 text-white text-sm px-4 py-2 rounded-md hover:bg-red-700 font-medium transition" %>
   </div>
 
+  <div class="grid grid-cols-3 gap-3">
+    <div class="bg-gray-900 border border-gray-700 rounded-lg p-4 flex flex-col gap-1">
+      <span class="text-2xl font-bold text-white"><%= @workouts_this_week %></span>
+      <span class="text-xs text-gray-500">This week</span>
+    </div>
+    <div class="bg-gray-900 border border-gray-700 rounded-lg p-4 flex flex-col gap-1">
+      <span class="text-2xl font-bold text-white"><%= @current_streak %> <span class="text-base font-normal text-gray-500"><%= @current_streak == 1 ? "day" : "days" %></span></span>
+      <span class="text-xs text-gray-500">Current streak</span>
+    </div>
+    <div class="bg-gray-900 border border-gray-700 rounded-lg p-4 flex flex-col gap-1">
+      <span class="text-2xl font-bold text-white"><%= number_with_delimiter(@volume_this_week) %> <span class="text-base font-normal text-gray-500">lbs</span></span>
+      <span class="text-xs text-gray-500">Volume this week</span>
+    </div>
+  </div>
+
   <% if @workouts.any? %>
     <ul class="flex flex-col gap-3">
       <% @workouts.each do |workout| %>

@@ -19,6 +19,55 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
     assert_match @workout.name, response.body
   end
 
+  test "index counts only this user's workouts logged this week" do
+    sign_in @user
+    @user.workouts.create!(name: "Monday", date: Date.today.beginning_of_week)
+    @user.workouts.create!(name: "Today", date: Date.today)
+    @user.workouts.create!(name: "Last week", date: 8.days.ago.to_date)
+    users(:two).workouts.create!(name: "Other user's", date: Date.today)
+
+    get workouts_path
+    assert_response :success
+    assert_select "span.text-2xl", text: "2"
+  end
+
+  test "index computes the current streak of consecutive days" do
+    sign_in @user
+    @user.workouts.create!(name: "Today", date: Date.today)
+    @user.workouts.create!(name: "Yesterday", date: 1.day.ago.to_date)
+    @user.workouts.create!(name: "Two days ago", date: 2.days.ago.to_date)
+    @user.workouts.create!(name: "Not consecutive", date: 10.days.ago.to_date)
+
+    get workouts_path
+    assert_response :success
+    assert_select "span", text: "3"
+  end
+
+  test "index streak counts yesterday even if nothing logged today yet" do
+    sign_in @user
+    @user.workouts.create!(name: "Yesterday", date: 1.day.ago.to_date)
+
+    get workouts_path
+    assert_response :success
+    assert_select "span", text: "1"
+  end
+
+  test "index sums this week's volume across this user's sets only" do
+    sign_in @user
+    workout = @user.workouts.create!(name: "This week", date: Date.today)
+    entry = workout.exercise_entries.create!(exercise: exercises(:one))
+    entry.set_entries.create!(set_number: 1, reps: 10, weight: 100)
+    entry.set_entries.create!(set_number: 2, reps: 5, weight: 50)
+
+    other_workout = users(:two).workouts.create!(name: "Other user's", date: Date.today)
+    other_entry = other_workout.exercise_entries.create!(exercise: exercises(:two))
+    other_entry.set_entries.create!(set_number: 1, reps: 100, weight: 100)
+
+    get workouts_path
+    assert_response :success
+    assert_match "1,250", response.body
+  end
+
   test "show displays the current user's workout" do
     sign_in @user
     get workout_path(@workout)

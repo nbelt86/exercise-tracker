@@ -1,6 +1,9 @@
 class WorkoutsController < ApplicationController
   def index
     @workouts = current_user.workouts
+    @workouts_this_week = @workouts.where(date: Date.today.beginning_of_week..Date.today.end_of_week).count
+    @current_streak = current_streak
+    @volume_this_week = volume_this_week
   end
 
   def show
@@ -61,6 +64,26 @@ private
 
   def workout_params
     params.require(:workout).permit(:name, :date)
+  end
+
+  def current_streak
+    workout_dates = current_user.workouts.where.not(date: nil).distinct.pluck(:date).to_set
+    cursor = Date.today
+    cursor -= 1 unless workout_dates.include?(cursor)
+
+    streak = 0
+    while workout_dates.include?(cursor)
+      streak += 1
+      cursor -= 1
+    end
+
+    streak
+  end
+
+  def volume_this_week
+    SetEntry.joins(exercise_entry: :workout)
+            .where(workouts: { user_id: current_user.id, date: Date.today.beginning_of_week..Date.today.end_of_week })
+            .sum("set_entries.reps * set_entries.weight")
   end
 
 end
