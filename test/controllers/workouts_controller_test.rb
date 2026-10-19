@@ -28,7 +28,7 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
 
     get workouts_path
     assert_response :success
-    assert_select "span.text-2xl", text: "2"
+    assert_select "#stat-workouts-this-week", text: "2"
   end
 
   test "index computes the current streak of consecutive days" do
@@ -40,7 +40,7 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
 
     get workouts_path
     assert_response :success
-    assert_select "span", text: "3"
+    assert_select "#stat-current-streak", text: "3 days"
   end
 
   test "index streak counts yesterday even if nothing logged today yet" do
@@ -49,7 +49,7 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
 
     get workouts_path
     assert_response :success
-    assert_select "span", text: "1"
+    assert_select "#stat-current-streak", text: "1 day"
   end
 
   test "index sums this week's volume across this user's sets only" do
